@@ -11,19 +11,26 @@ int main()
     cout << "Enter polynomial: ";
     getline(cin, input);
 
-    Polynomial polynomial(input);
-    polynomial.compact();
+    std::shared_ptr<Polynomial> polynomial;
+    try {
+        polynomial = std::make_shared<Polynomial>(input);
+    } catch (const expression_parse_error& err)
+    {
+        cerr << "Malformed input: " << err.what() << endl;
+        return EXIT_FAILURE;
+    }
+    polynomial->compact();
 
     cout << " Parsed: " << polynomial << endl;
 
     cout << " Derivatives: " << endl;
     for (char var = Monomial::VAR_MIN; var <= Monomial::VAR_MAX; var++) {
-        cout << "  '" << var << "': " << polynomial.differentiate(var) << endl;
+        cout << "  '" << var << "': " << polynomial->differentiate(var) << endl;
     }
 
     cout << " Antiderivatives: " << endl;
     for (char var = Monomial::VAR_MIN; var <= Monomial::VAR_MAX; var++) {
-        cout << "  '" << var << "': " << polynomial.integrate(var) << endl;
+        cout << "  '" << var << "': " << polynomial->integrate(var) << endl;
     }
 
     return EXIT_SUCCESS;

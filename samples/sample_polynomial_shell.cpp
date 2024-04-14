@@ -24,6 +24,8 @@ int main()
             { 'z', 0 },
     };
 
+    std::shared_ptr<Polynomial> polynomial;
+
     string input;
     char var;
     while (true) {
@@ -34,8 +36,13 @@ int main()
             break;
         }
 
-        Polynomial polynomial(input);
-        polynomial.compact();
+        try {
+            polynomial = std::make_shared<Polynomial>(input);
+        } catch (const expression_parse_error& err) {
+            cout << "Malformed input: " << err.what() << endl;
+            continue;
+        }
+        polynomial->compact();
 
         cout << "<<< " << polynomial << endl;
 
@@ -44,16 +51,16 @@ int main()
             cin >> input;
 
             if ("+" == input || "-" == input || "*" == input || "/" == input) {
-                perform_arithmetic_operation(polynomial, input[0], input);
+                perform_arithmetic_operation(*polynomial, input[0], input);
             } else if ("differentiate" == input || "integrate" == input) {
                 cin >> var;
                 if (var < Monomial::VAR_MIN || var > Monomial::VAR_MAX) {
                     cout << "Unknown variable";
                 } else {
                     if ("differentiate" == input) {
-                        polynomial = polynomial.differentiate(var);
+                        *polynomial = polynomial->differentiate(var);
                     } else {
-                        polynomial = polynomial.integrate(var);
+                        *polynomial = polynomial->integrate(var);
                     }
                     cout << "<<< " << polynomial << endl;
                 }
@@ -78,25 +85,30 @@ void perform_arithmetic_operation(Polynomial& polynomial, char opcode, string& b
 {
     getline(cin, buf);
 
-    const Polynomial other(buf);
+    std::shared_ptr<Polynomial> other;
+    try {
+        other = std::make_shared<Polynomial>(buf);
+    } catch (const expression_parse_error& err) {
+        cout << "Malformed input: " << err.what() << endl;
+    }
 
     cout << "<<< ";
 
     switch (opcode) {
         case '+': {
-            polynomial += other;
+            polynomial += *other;
             break;
         }
         case '-': {
-            polynomial -= other;
+            polynomial -= *other;
             break;
         }
         case '*': {
-            polynomial *= other;
+            polynomial *= *other;
             break;
         }
         case '/': {
-            polynomial /= other;
+            polynomial /= *other;
             break;
         }
         default: {
