@@ -1,5 +1,5 @@
-#ifndef __BINARYTREE_BinaryTreeIterator_H__
-#define __BINARYTREE_BinaryTreeIterator_H__
+#ifndef __BINARYTREE_ITERATOR_H__
+#define __BINARYTREE_ITERATOR_H__
 
 template<typename Node, typename U>
 class BinaryTreeIterator
@@ -71,4 +71,4 @@ U* BinaryTreeIterator<Node, U>::operator->() const
     return &cur->data;
 }
 
-#endif // __BINARYTREE_BinaryTreeIterator_H__
+#endif // __BINARYTREE_ITERATOR_H__
