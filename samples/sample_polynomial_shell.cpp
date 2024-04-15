@@ -64,7 +64,7 @@ int main()
                     }
                     cout << "<<< " << polynomial << endl;
                 }
-            } else if ("calculate" == input) {
+            } else if ("evaluate" == input) {
                 for (auto& item : point) {
                     cin >> item.second;
                 }
