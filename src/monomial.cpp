@@ -4,6 +4,7 @@
 #include <cmath>
 
 #include "reader.h"
+#include "parsingexcept.h"
 
 inline bool verify_degree(int deg)
 {

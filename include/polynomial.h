@@ -7,12 +7,7 @@
 #include <limits>
 
 #include "ordered_linkedlist.h"
-
-class expression_parse_error : public std::runtime_error
-{
-public:
-    explicit expression_parse_error(const std::string &message) : runtime_error(message) {}
-};
+#include "parsingexcept.h"
 
 class Monomial {
 private:
@@ -130,8 +125,7 @@ private:
 
     OrderedLinkedList<Monomial> monomials = OrderedLinkedList<Monomial>(OrderFunction);
 
-    template<typename Operation>
-    static Polynomial apply_sum(const Polynomial& p1, const Polynomial& p2, Operation op);
+    static Polynomial apply_sum(const Polynomial& p1, const Polynomial& p2, int sign);
     template<typename Operation>
     static Polynomial apply_mult(const Polynomial& p1, const Polynomial& p2, Operation op);
 
