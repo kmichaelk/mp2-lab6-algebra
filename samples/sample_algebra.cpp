@@ -102,7 +102,7 @@ int main()
             }
         } else if (input.rfind("select table", 0) == 0) {
             int new_idx;
-            if (!sscanf_s(input.c_str(), "select table %u", &new_idx)) {
+            if (!sscanf_s(input.c_str(), "select table %d", &new_idx)) {
                 cerr << "Invalid query" << endl;
                 continue;
             }
@@ -224,4 +224,5 @@ std::vector<std::reference_wrapper<const TK>> table_keys(const table_variant_t& 
 {
     std::vector<std::reference_wrapper<const TK>> key_set;
     TABLES_EXPAND(TABLE_KEY_SET, table, key_set);
+    assert(false);
 }
