@@ -1,9 +1,7 @@
 #ifndef __ALGEBRA_CONVERTER_H__
 #define __ALGEBRA_CONVERTER_H__
 
-#include <iostream>
 #include <vector>
-#include <stack>
 
 #include <AlgebraicExpressionParserBaseListener.h>
 
@@ -46,9 +44,6 @@ public:
     }
 
     void exitMonomial(AlgebraicExpressionParser::MonomialContext *ctx) override {
-        std::cout << "MONOMIAL : " << ctx->getText() << std::endl;
-        std::cout << " ~~~ parsed: " << buf.monomial << std::endl << std::endl;
-
         postfix.emplace_back(buf.monomial);
     }
 
@@ -57,7 +52,6 @@ public:
     }
 
     void exitAtom(AlgebraicExpressionParser::AtomContext *ctx) override {
-        std::cout << "ATOM : " << ctx->getText() << std::endl;
         buf.atom = 0;
     }
 
@@ -72,15 +66,6 @@ public:
         } else {
             buf.monomial.set_coefficient(std::stod(ctx->getText()));
         }
-    }
-
-    void exitInput(AlgebraicExpressionParser::InputContext *) override {
-        std::cout << "  ---> complete <---" << std::endl;
-        std::cout << std::endl;
-        //for (const auto &item : postfix) {
-        //    std::cout << item << " ";
-        //}
-        //std::cout << std::endl;
     }
 };
 
