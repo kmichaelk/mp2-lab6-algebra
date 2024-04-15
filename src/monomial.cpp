@@ -124,6 +124,11 @@ bool Monomial::cmp_degs(const Monomial& other) const noexcept
     return degs == other.degs;
 }
 
+bool Monomial::has_degs() const noexcept
+{
+    return degs.packed != 0;
+}
+
 Monomial::Degrees::value_t& Monomial::operator[](char var) noexcept
 {
     return const_cast<Monomial::Degrees::value_t&>(std::as_const(*this)[var]);

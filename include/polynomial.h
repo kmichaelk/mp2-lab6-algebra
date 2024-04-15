@@ -65,8 +65,8 @@ public:
     double coefficient() const noexcept;
     void set_coefficient(double coefficient) noexcept;
 
-    [[nodiscard]]
-    bool cmp_degs(const Monomial& other) const noexcept;
+    [[nodiscard]] bool cmp_degs(const Monomial& other) const noexcept;
+    [[nodiscard]] bool has_degs() const noexcept;
 
     Degrees::value_t& operator[](char var) noexcept;
     const Degrees::value_t& operator[](char var) const noexcept;
@@ -98,7 +98,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Monomial& m)
     {
-        if (fabs(m.k) != 1.0) {
+        if (m.degs.packed == 0 || fabs(m.k) != 1.0) {
             os << m.k;
         }
 
@@ -177,7 +177,7 @@ public:
             kAbs = fabs(k);
 
             os << (fst ? "" : " ") << ((k < 0) ? "-" : (fst ? "" : "+")) << (fst ? "" : " ");
-            if (kAbs != 1.0f) {
+            if (!m.has_degs() || kAbs != 1.0f) {
                 os << kAbs;
             }
 
