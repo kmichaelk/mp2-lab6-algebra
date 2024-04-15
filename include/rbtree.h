@@ -338,7 +338,8 @@ RBTree<K, V>::RBTree(std::initializer_list<std::pair<K, V>> init)
 
 template<typename K, typename V>
 RBTree<K, V>::RBTree(const RBTree& src)
-    : records(src.records)
+    : root(nullptr)
+    , records(src.records)
 {
     if (src.root == nullptr) return;
 

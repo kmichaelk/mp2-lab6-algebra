@@ -218,7 +218,8 @@ AVLTree<K, V>::AVLTree(std::initializer_list<std::pair<K, V>> init)
 
 template<typename K, typename V>
 AVLTree<K, V>::AVLTree(const AVLTree& src)
-    : records(src.records)
+    : root(nullptr)
+    , records(src.records)
 {
     if (src.root == nullptr) return;
 
