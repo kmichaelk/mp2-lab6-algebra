@@ -24,8 +24,8 @@ public:
 
     Chain(Chain&& src) noexcept;
 
-    Chain(const Chain& src) = delete;
-    Chain& operator=(const Chain& other) = delete;
+    Chain(const Chain& src);
+    Chain& operator=(const Chain& other);
 
     ~Chain();
 
@@ -103,7 +103,7 @@ void Chain<T>::destroy_links()
 
 template<typename T>
 Chain<T>::Chain()
-        : head(nullptr)
+    : head(nullptr)
 {}
 
 template<typename T>
@@ -111,6 +111,31 @@ Chain<T>::Chain(Chain &&src) noexcept
     : head(nullptr)
 {
     swap(*this, src);
+}
+
+template<typename T>
+Chain<T>::Chain(const Chain& src)
+    : head(nullptr)
+{
+    if (!src.head) {
+        return;
+    }
+
+    Link *cur = head = new Link{ *src.head };
+    for (; cur->next; cur = cur->next) {
+        cur->next = new Link{ *cur->next };
+    }
+}
+
+template<typename T>
+Chain<T>& Chain<T>::operator=(const Chain &other)
+{
+    if (this == &other)
+        return *this;
+
+    Chain<T> tmp(other);
+    swap(*this, tmp);
+    return *this;
 }
 
 template<typename T>
