@@ -340,6 +340,8 @@ template<typename K, typename V>
 RBTree<K, V>::RBTree(const RBTree& src)
     : records(src.records)
 {
+    if (src.root == nullptr) return;
+
     const node_t* p_src = src.root;
 
     root = new node_t { src.root->data };

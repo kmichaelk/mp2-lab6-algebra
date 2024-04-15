@@ -220,6 +220,8 @@ template<typename K, typename V>
 AVLTree<K, V>::AVLTree(const AVLTree& src)
     : records(src.records)
 {
+    if (src.root == nullptr) return;
+
     const node_t* p_src = src.root;
 
     root = new node_t { src.root->data };
