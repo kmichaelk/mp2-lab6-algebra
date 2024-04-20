@@ -68,7 +68,7 @@ int main()
                 for (auto& item : point) {
                     cin >> item.second;
                 }
-                cout << "<<< " << polynomial.calculate(point) << endl;
+                cout << "<<< " << polynomial->calculate(point) << endl;
             } else if ("discard" == input) {
                 cin.ignore();
                 break;
